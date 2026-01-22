@@ -53,6 +53,9 @@ eksctl get iamserviceaccount --cluster test --region ap-south-1 --namespace kube
 
 ## How to expose your web service running in EKS to external traffic.
 ```
+# 第1步：创建IAM OIDC提供者
+eksctl utils associate-iam-oidc-provider --region=ap-south-1 --cluster=igs --approve
+
 # Create IAM role for AWS Load Balancer Controller
 eksctl create iamserviceaccount \
   --cluster=test \
