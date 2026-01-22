@@ -74,6 +74,25 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller
 ```
+## Need vpcID
+```
+# Create IAM role for AWS Load Balancer Controller
+eksctl create iamserviceaccount \
+  --cluster=test \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller2 \
+  --role-name AmazonEKSLoadBalancerControllerRole2 \
+  --attach-policy-arn=arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess \
+  --approve
+
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName=test \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller2 \
+  --set vpcId=vpc-09009123123456789
+```
+
 
 ```
 # service.yaml
